@@ -1,0 +1,44 @@
+<template name="home">
+{{#with route }}
+<h1>Current Route : {{ name }}</h1>
+	<ul>
+		<li>Controller : {{ controller }}</li>
+		<li>isReactive : {{ isReactive }}</li>
+		<li>Where : {{ where }}</li>
+		<li>
+			Options
+			<hr />
+			{{#with options }}
+				{{> route }}
+			{{/with}}
+		</li>
+	</ul>
+{{/with}}
+<h2>All Routes</h2>
+<ul>
+	{{#each routes }}
+		<hr />
+		{{> route }}
+		<hr />
+	{{/each}}
+</ul>
+</template>
+
+<template name="route">
+<ul>
+	<li>External : {{ external }}</li>
+	<li>Route : {{ route }}</li>
+	<li>Path : {{ path }}</li>
+	<li>Controller : {{ controller }}</li>
+	<li>
+		Page
+		<hr/>
+		<ul>
+			{{#with page }}
+			<li>Title : {{ title }}</li>
+			<li>Subtitle : {{ subtitle }}</li>
+			{{/with}}
+		</ul>
+	</li>
+</ul>
+</template>

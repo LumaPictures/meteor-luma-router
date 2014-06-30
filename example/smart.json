@@ -1,0 +1,7 @@
+{
+  "packages": {
+    "luma-router": {
+      "path": ".."
+    }
+  }
+}
