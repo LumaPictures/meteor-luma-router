@@ -24,6 +24,11 @@ Package.on_use(function (api, where) {
   api.add_files([
     'lib/luma-router.coffee'
   ], [ 'client', 'server' ]);
+
+  api.add_files([
+    'lib/components/anchor/anchor.component.html',
+    'lib/components/anchor/anchor.component.coffee'
+  ], [ 'client' ]);
 });
 
 Package.on_test(function (api) {
