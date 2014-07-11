@@ -6,7 +6,7 @@ Luma.Controllers = Base: RouteController
 # ======
 # `luma-router` uses db driven routes to enable simple management of routes from an administrative backend.
 # [An example route db collection can be seen here](../example/server/init_pages.coffee)
-Luma.Router.collection = new Meteor.Collection 'routes'
+Luma.Router.collection = new Meteor.Collection 'Route'
 
 # Routes cannot be modified by the client by default
 
@@ -105,14 +105,15 @@ Luma.Router.initialize = ->
   if Meteor.isServer
     Luma.Router.publish()
   if Meteor.isClient
+    subs = new SubsManager cacheLimit: 9999, expireIn: 9999
     Luma.Router.configure
       # disable rendering until subscription is ready
       autoStart: false
       notFoundTemplate: "error404"
       loadingTemplate: "loading"
-      waitOn: -> Meteor.subscribe 'all_routes'
+      waitOn: -> subs.subscribe 'all_routes'
     # when the 'all_routes' subscription is ready
-    Meteor.subscribe 'all_routes', ->
+    subs.subscribe 'all_routes', ->
       # if the router has not been initialized yet
       unless Luma.Router.initialized
         Luma.Router.map ->

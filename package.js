@@ -6,7 +6,8 @@ Package.on_use(function (api, where) {
   api.use([
     'coffeescript',
     'underscore',
-    'iron-router'
+    'iron-router',
+    'subs-manager'
   ],[ 'client', 'server' ]);
 
   // for helpers
