@@ -3,7 +3,7 @@
   "description": "Database driven routes and utilities for Iron-Router",
   "homepage": "https://github.com/LumaPictures/meteor-luma-router",
   "author": "Austin Rivas <austinrivas@gmail.com> (https://github.com/austinrivas)",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "git": "https://github.com/LumaPictures/meteor-luma-router",
   "packages": {
   	"iron-router": {},
