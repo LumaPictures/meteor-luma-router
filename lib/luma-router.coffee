@@ -101,11 +101,19 @@ Luma.Router.addRoutes = ( routes ) ->
 # Initial router configuration
 Luma.Router.initialized = false
 
+if Meteor.isClient
+  Luma.Router.managers =
+    global: new SubsManager cacheLimit: 9999, expireIn: 9999
+
+  Luma.Router.subscriptions =
+    all_routes: ( callback = null ) ->
+      global = Luma.Router.managers.global
+      return global.subscribe 'all_routes', callback
+
 Luma.Router.initialize = ->
   if Meteor.isServer
     Luma.Router.publish()
   if Meteor.isClient
-    subs = new SubsManager cacheLimit: 9999, expireIn: 9999
     Luma.Router.configure
       # disable rendering until subscription is ready
       autoStart: false
@@ -113,13 +121,10 @@ Luma.Router.initialize = ->
       loadingTemplate: "loading"
       waitOn: ->
         handles = []
-        if Meteor.user()
-          username = Meteor.user().username
-          handles.push Meteor.subscribe "user", username
-        handles.push subs.subscribe 'all_routes'
+        handles.push subscription() for key, subscription of Luma.Router.subscriptions
         return handles
     # when the 'all_routes' subscription is ready
-    subs.subscribe 'all_routes', ->
+    Luma.Router.subscriptions.all_routes ->
       # if the router has not been initialized yet
       unless Luma.Router.initialized
         Luma.Router.map ->
