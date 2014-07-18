@@ -111,7 +111,13 @@ Luma.Router.initialize = ->
       autoStart: false
       notFoundTemplate: "error404"
       loadingTemplate: "loading"
-      waitOn: -> subs.subscribe 'all_routes'
+      waitOn: ->
+        handles = []
+        if Meteor.user()
+          username = Meteor.user().username
+          handles.push Meteor.subscribe "user", username
+        handles.push subs.subscribe 'all_routes'
+        return handles
     # when the 'all_routes' subscription is ready
     subs.subscribe 'all_routes', ->
       # if the router has not been initialized yet
@@ -138,11 +144,11 @@ Luma.Router.regex = ( expression ) -> new RegExp expression, "i"
 
 Luma.Router.testRoutes = ( routeNames ) ->
   reg = Luma.Router.regex routeNames
-  return Luma.Router.current() and reg.test Luma.Router.current().route.name
+  return Router.current() and reg.test Router.current().route.name
 
 Luma.Router.testPaths = ( paths ) ->
   reg = Luma.Router.regex paths
-  return Luma.Router.current() and reg.test Luma.Router.current().path
+  return Router.current() and reg.test Router.current().path
 
 Luma.Router.isActiveRoute = ( routes, className ) ->
   className = className or "active"

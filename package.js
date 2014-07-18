@@ -19,7 +19,8 @@ Package.on_use(function (api, where) {
   ], [ 'client' ]);
 
   api.export([
-    'Luma'
+    'Luma',
+    'Router'
   ], ['client','server']);
 
   api.add_files([
