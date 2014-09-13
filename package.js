@@ -1,8 +1,14 @@
 Package.describe({
-  summary: "Database driven routes and utilities for Iron-Router"
+  name: "luma:router",
+  summary: "Database driven routes and utilities for Iron-Router",
+  git: "https://github.com/LumaPictures/meteor-luma-router",
+  version: "0.0.9"
 });
 
-Package.on_use(function (api, where) {
+Package.onUse(function (api) {
+  if (api.versionsFrom)
+    api.versionsFrom('METEOR@0.9.0');
+
   api.use([
     'coffeescript',
     'underscore',
@@ -33,10 +39,10 @@ Package.on_use(function (api, where) {
   ], [ 'client' ]);
 });
 
-Package.on_test(function (api) {
+Package.onTest(function (api) {
   api.use([
     'coffeescript',
-    'luma-router',
+    'luma:router',
     'tinytest',
     'test-helpers'
   ], ['client', 'server']);
